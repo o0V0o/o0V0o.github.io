@@ -8,7 +8,67 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>O0v0o</title>
+    <title>o0v0o</title>
+
+	<script src="http://github.com/gamesys/moonshine/vm/moonshine.min.js"></script>
+	<script src="http://github.com/gamesys/moonshine/extensions/DOMAPI/DOMAPI.moonshine.js"></script>
+	<script src="http://github.com/gamesys/moonshine/distillery/distillery.moonshine.js"></script>
+	<script src="http://github.com/gamesys/moonshine/extensions/luac/luac.moonshine.js"></script>
+	<script>
+		var vm = new shine.VM(shine.DOMAPI)
+
+
+	function run(code){
+		compile(code, function(err, bc){
+			if(err){
+				window.alert("Compile error!")
+			}else{
+				vm.load(bc)
+			}
+		});
+	}
+	function compile (code, callback) {
+		//if ('onLine' in navigator && !navigator.onLine) {
+			compileOffline(code, callback);
+		//} else {
+			//compileOnline(code, callback);
+		//}
+	}
+
+
+
+
+	function compileOnline (code, callback) {
+		ui.status.textContent = 'Compiling...';
+
+		var body = shine.utils.get.toString().replace(/\/\/.*?\n/g, '').replace(/\n/g, '/* nl */').match(/{(.*)}/)[1],
+			data = new FormData(),
+			post;
+		body = body.replace('GET', 'POST').replace('shine.EMPTY_OBJ', 'postData').replace(/\/\* nl \*\//g, '\n');
+		post = new Function('url', 'postData', 'success', 'error', body);
+		data.append('lua', code);
+
+		function success (data) {
+			ui.status.textContent
+			=
+			'';
+
+			if (data.error) {
+				callback(data.details);
+			}else {
+				callback(undefined, JSON.parse(data));
+			}
+		}
+
+		function error () {
+			compileOffline(code,
+			callback);
+		}
+
+	post('http://distillery.moonshinejs.org', data, success, error);
+	}
+
+	</script>
   </head>
 
   <body>
