@@ -37,10 +37,16 @@
 		<p></p>
 			<div></div>
 	</div>
-	<script src="http://raw.githubusercontent.com/gamesys/moonshine/master/vm/moonshine.min.js"></script>
-	<script src="http://raw.githubusercontent.com/gamesys/moonshine/master/extensions/DOMAPI/DOMAPI.moonshine.js"></script>
+	<script src="http://rawgit.com/gamesys/moonshine/master/vm/moonshine.min.js"><script>
+	<script src="http://rawgit.com/gamesys/moonshine/master/extensions/DOMAPI/DOMAPI.moonshine.js"></script>
 	<script>
-		new shine.VM(shine.DOMAPI).load("./findyou.lua.json");
+		env = {
+			printstr: function(str) {
+				console.log(str)
+			}
+		}
+
+		new shine.VM(shine.DOMAPI).load("./test.lua.json");
 	</script>
 	
     <!-- FOOTER  -->
