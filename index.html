@@ -37,16 +37,11 @@
 		<p></p>
 			<div></div>
 	</div>
-	<script src="http://rawgit.com/gamesys/moonshine/master/vm/moonshine.min.js"><script>
-	<script src="http://rawgit.com/gamesys/moonshine/master/extensions/DOMAPI/DOMAPI.moonshine.js"></script>
-	<script>
-		env = {
-			printstr: function(str) {
-				console.log(str)
-			}
-		}
 
-		new shine.VM(shine.DOMAPI).load("./test.lua.json");
+
+	<script src="/javascripts/lua.vm.js"></script>
+	<script type="text/lua">
+		js.global:alert('hello from Lua script tag in HTML!') -- this is Lua!
 	</script>
 	
     <!-- FOOTER  -->
